@@ -48,6 +48,29 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
     return output
 
 
+def rpn_evaluate(expression: list):
+    for token in expression[:]:
+        if not token.isdigit():
+            token_index = expression.index(token)
+
+            if token == '+':
+                expression[token_index-2] = float(expression[token_index-2]) + float(expression[token_index-1])
+            if token == '-':
+                expression[token_index - 2] = float(expression[token_index - 2]) - float(expression[token_index - 1])
+            if token == '*':
+                expression[token_index - 2] = float(expression[token_index - 2]) * float(expression[token_index - 1])
+            if token == '/':
+                expression[token_index - 2] = float(expression[token_index - 2]) / float(expression[token_index - 1])
+            if token == '^':
+                expression[token_index - 2] = float(expression[token_index - 2]) ** float(expression[token_index - 1])
+
+            expression.pop(token_index)
+            expression.pop(token_index-1)
+
+    return expression[0]
+
+
+    
 if __name__ == "__main__":
     operator_to_precedence = {
         '+': 0,
@@ -60,9 +83,11 @@ if __name__ == "__main__":
     }
 
     # Tests
-    expression = "1 + 1 - 3 * 12"
+    expression = "1 + 1 + 1"
     tokenized_expression = tokenizer(expression, list(operator_to_precedence.keys()))
     rpn = shunting_yard(tokenized_expression, operator_to_precedence)
+    result = rpn_evaluate(rpn)
     print("Expression: " + expression)
     print("Tokenized Expression: " + str(tokenized_expression))
     print("RPN: " + str(rpn))
+    print("result: " + str(result))
