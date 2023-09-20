@@ -16,7 +16,7 @@ def tokenizer(user_input: str, operator_list: list) -> list:
 
 def shunting_yard(tokenized_expression: list, operator_precedence: dict):
     output = []
-    operater_stack = []
+    operator_stack = []
 
     opening_parenthesis_counter = 0
     closing_parenthesis_counter = 0
@@ -25,22 +25,22 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
         if token.isdigit():
             output.append(token)
         elif token in operator_precedence.keys():
-            while operater_stack and operator_precedence[token] <= operator_precedence[operater_stack[-1]] and operater_stack[-1] != '(':
-                output.append(operater_stack.pop())
-            operater_stack.append(token)
+            while operator_stack and operator_precedence[token] <= operator_precedence[operator_stack[-1]] and operator_stack[-1] != '(':
+                output.append(operator_stack.pop())
+            operator_stack.append(token)
         elif token == '(':
             opening_parenthesis_counter += 1
-            operater_stack.append(token)
+            operator_stack.append(token)
         elif token == ')':
             closing_parenthesis_counter += 1
-            while operater_stack and operater_stack[-1] != "(":
-                output.append(operater_stack.pop())
-            operater_stack.pop()
+            while operator_stack and operator_stack[-1] != "(":
+                output.append(operator_stack.pop())
+            operator_stack.pop()
         else:
             continue
 
-    while operater_stack:
-        output.append(operater_stack.pop())
+    while operator_stack:
+        output.append(operator_stack.pop())
 
     if opening_parenthesis_counter != closing_parenthesis_counter:
         print("warning: parenthesis mismatch detected")
