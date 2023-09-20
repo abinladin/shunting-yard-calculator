@@ -47,7 +47,7 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
 
     return output
 
-
+# TODO: This function gives a 'list index out of range' error if a number token consists of more than one digit. fix it
 def rpn_evaluate(expression: list):
     for token in expression[:]:
         if not token.isdigit():
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     }
 
     # Tests
-    expression = "1 + 1 + 1"
+    expression = input("Please enter an expression to evaluate: ")
     tokenized_expression = tokenizer(expression, list(operator_to_precedence.keys()))
     rpn = shunting_yard(tokenized_expression, operator_to_precedence)
     result = rpn_evaluate(rpn)
