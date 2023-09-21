@@ -59,6 +59,10 @@ def rpn_evaluate(expression: list):
             if token == '*':
                 expression[token_index - 2] = float(expression[token_index - 2]) * float(expression[token_index - 1])
             if token == '/':
+                if float(expression[token_index - 1]) == 0:
+                    print("[ERROR] ignoring division by zero, result will be incorrect")
+                    print("RPN: " + str(expression))
+                    continue
                 expression[token_index - 2] = float(expression[token_index - 2]) / float(expression[token_index - 1])
             if token == '^':
                 expression[token_index - 2] = float(expression[token_index - 2]) ** float(expression[token_index - 1])
