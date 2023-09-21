@@ -1,3 +1,4 @@
+# TODO: account for negative numbers and floating point numbers
 def tokenizer(user_input: str, operator_list: list) -> list:
     token_builder = ""
     tokenized_list = []
