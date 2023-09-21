@@ -1,9 +1,9 @@
-# TODO: account for negative numbers and floating point numbers
+# TODO: account for floating point numbers
 def tokenizer(user_input: str, operator_list: list) -> list:
     token_builder = ""
     tokenized_list = []
     for char in user_input:
-        if char.isdigit():
+        if char.isdigit() or char == "-":
             token_builder += char
         elif char in operator_list:
             tokenized_list.append(token_builder)
@@ -23,7 +23,7 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
     closing_parenthesis_counter = 0
 
     for token in tokenized_expression:
-        if token.isdigit():
+        if token.isdigit() or token[0] == "-":
             output.append(token)
         elif token in operator_precedence.keys():
             while operator_stack and operator_precedence[token] <= operator_precedence[operator_stack[-1]] and operator_stack[-1] != '(':
@@ -51,7 +51,7 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
 
 def rpn_evaluate(expression: list):
     for token in expression[:]:
-        if not token.isdigit():
+        if not (token.isdigit() or token[0] == '-'):
             token_index = expression.index(token)
 
             if token == '+':
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     # Tests
     # expression = input("Please enter an expression to evaluate: ")
-    expression = "100 * 2 + 5"
+    expression = "-100 * 2 + 5"
     tokenized_expression = tokenizer(expression, list(operator_to_precedence.keys()))
     rpn = shunting_yard(tokenized_expression, operator_to_precedence)
     result = rpn_evaluate(rpn)
