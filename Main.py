@@ -86,8 +86,8 @@ if __name__ == "__main__":
     }
 
     # Tests
-    # expression = input("Please enter an expression to evaluate: ")
-    expression = "-100 * 2 + 5"
+    expression = input("Please enter an expression to evaluate: ")
+    #expression = "-100 * 2 + 5"
     tokenized_expression = tokenizer(expression, list(operator_to_precedence.keys()))
     rpn = shunting_yard(tokenized_expression, operator_to_precedence)
     result = rpn_evaluate(rpn)
