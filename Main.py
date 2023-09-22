@@ -3,7 +3,7 @@ def tokenizer(user_input: str, operator_list: list) -> list:
     token_builder = ""
     tokenized_list = []
     for char in user_input:
-        if char.isdigit() or char == "-":
+        if char.isdigit():
             token_builder += char
         elif char in operator_list:
             tokenized_list.append(token_builder)
@@ -23,7 +23,7 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
     closing_parenthesis_counter = 0
 
     for token in tokenized_expression:
-        if token.isdigit() or token[0] == "-":
+        if token.isdigit():
             output.append(token)
         elif token in operator_precedence.keys():
             while operator_stack and operator_precedence[token] <= operator_precedence[operator_stack[-1]] and operator_stack[-1] != '(':
@@ -51,11 +51,13 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
 
 def rpn_evaluate(expression: list):
     for token in expression[:]:
-        if not (token.isdigit() or token[0] == '-'):
+        if not (token.isdigit()):
             token_index = expression.index(token)
 
             if token == '+':
                 expression[token_index-2] = float(expression[token_index-2]) + float(expression[token_index-1])
+            if token == '-':
+                expression[token_index-2] = float(expression[token_index-2]) - float(expression[token_index-1])
             if token == '*':
                 expression[token_index - 2] = float(expression[token_index - 2]) * float(expression[token_index - 1])
             if token == '/':
