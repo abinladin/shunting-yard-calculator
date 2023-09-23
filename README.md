@@ -7,7 +7,7 @@ The ```Main.py``` file is composed of three functions:
 - ```shunting_yard```, which implements Djikstra's shunting yard algorithm, converting the list from ```tokenizer``` into a Reverse Polish Notation format`
 - ```rpn_evaluate```, which evaluates the RPN list from ```shunting_yard``` to a solution.
 
-The script currently lacks support for floating point numbers and negative numbers.
+The script currently lacks support for floating point numbers and negative number inputs, however it can evaluate expressions that result in a negative number.
 
 ## License
 MIT License
