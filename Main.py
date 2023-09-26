@@ -25,10 +25,6 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
     for token in tokenized_expression:
         if token.isdigit():
             output.append(token)
-        elif token in operator_precedence.keys():
-            while operator_stack and operator_precedence[token] <= operator_precedence[operator_stack[-1]] and operator_stack[-1] != '(':
-                output.append(operator_stack.pop())
-            operator_stack.append(token)
         elif token == '(':
             opening_parenthesis_counter += 1
             operator_stack.append(token)
@@ -37,6 +33,10 @@ def shunting_yard(tokenized_expression: list, operator_precedence: dict):
             while operator_stack and operator_stack[-1] != "(":
                 output.append(operator_stack.pop())
             operator_stack.pop()
+        elif token in operator_precedence.keys():
+            while operator_stack and operator_precedence[token] <= operator_precedence[operator_stack[-1]] and operator_stack[-1] != '(':
+                output.append(operator_stack.pop())
+            operator_stack.append(token)
         else:
             continue
 
@@ -88,8 +88,7 @@ if __name__ == "__main__":
     }
 
     # Tests
-    expression = input("Please enter an expression to evaluate: ")
-    #expression = "-100 * 2 + 5"
+    expression = "5 * ( 1 + 1 )"
     tokenized_expression = tokenizer(expression, list(operator_to_precedence.keys()))
     rpn = shunting_yard(tokenized_expression, operator_to_precedence)
     result = rpn_evaluate(rpn)
